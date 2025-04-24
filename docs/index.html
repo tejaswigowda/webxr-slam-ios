@@ -33,7 +33,10 @@
 
 			const initXR = () => {
 				if (navigator.xr) {
-					navigator.xr.isSessionSupported('immersive-ar').then(supported => {
+					navigator.xr.isSessionSupported('immersive-ar',{
+          optionalFeatures: ['dom-overlay'],
+          domOverlay: { root: document.getElementById('overlay') }
+        }).then(supported => {
 						if (supported) {
 							goButton.disabled = false;
 							goButton.addEventListener('click', onButtonClick);
@@ -48,10 +51,14 @@
 
 			const onButtonClick = event => {
 				if (!session) {
-					navigator.xr.requestSession('immersive-ar')
+					navigator.xr.requestSession('immersive-ar', {
+          optionalFeatures: ['dom-overlay'],
+          domOverlay: { root: document.getElementById('overlay') }
+        })
 						.then(xrSession => {
 							initSession(xrSession);
 							goButton.innerText = 'End';
+							document.getElementById('overlay').style.display = 'block';
 						}).catch(err => {
 							console.error('Session setup error', err);
 						});
@@ -125,6 +132,8 @@
 					return;
 				}
 
+				const position = pose.transform.position;
+				document.getElementById('data').innerText = `Position: ${position.x.toFixed(2)}, ${position.y.toFixed(2)}, ${position.z.toFixed(2)}`;
 				engine.startFrame();
 				for (const view of pose.views) {
 					engine.preRender(
@@ -140,4 +149,7 @@
 			initXR();
 		</script>
 	</body>
+	<div id="overlay" style="display:none;position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.3); z-index: 999999999;">
+		<div id="data" style="color:wheat"></div>
+	</div>
 </html>
