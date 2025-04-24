@@ -7,12 +7,10 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<script src="./libs/three/three.min.js"></script>
-		<script src="./TeapotBufferGeometry.js"></script>
 	</head>
 	<body>
 		<div id="description" style="z-index: 999999999; background-color: white;">
-			<h2>Simple AR Example</h2>
-			<p>This example displays the Utah Teapot positioned in front of the viewer at head height.</p>
+			<h2>Simple WebXR SLAM Example</h2>
 		</div>
 		<button type=button id=go-button>Go</button>
 		<script type=module>
@@ -105,7 +103,7 @@
 
 				// Add a box and sphere at the origin of the eye-level coordinate system
 				engine.addBox([0, 0, 0], [0.025, 0.025, 0.025], 0x44ff44);
-				engine.addTeapot([0,0, -1]);
+				//engine.addTeapot([0,0, -1]);
 				engine.addAxesHelper([0,0,0], [0.2,0.2,0.2]);
 			};
 
