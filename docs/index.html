@@ -133,13 +133,11 @@
 				}
 
 				const position = pose.transform.position;
-				document.getElementById('data').innerText = `Position: ${position.x.toFixed(2)}, ${position.y.toFixed(2)}, ${position.z.toFixed(2)}` + "<br>" +
-					`Orientation: ${pose.transform.orientation.x.toFixed(2)}, ${pose.transform.orientation.y.toFixed(2)}, ${pose.transform.orientation.z.toFixed(2)}, ${pose.transform.orientation.w.toFixed(2)}` + "<br>" +
-					wsurl;
+				document.getElementById('data').innerHTML = `Position: ${position.x.toFixed(2)}, ${position.y.toFixed(2)}, ${position.z.toFixed(2)}` + "<br>" +
+					`Orientation: ${pose.transform.orientation.x.toFixed(2)}, ${pose.transform.orientation.y.toFixed(2)}, ${pose.transform.orientation.z.toFixed(2)}, ${pose.transform.orientation.w.toFixed(2)}` + "<br>" 
 				// send ws message
 				if (wsconnect) {
 					ws.send(JSON.stringify({
-						//.... some message the I must send when I connect ....
 						position: position
 					}));
 				}
@@ -153,6 +151,11 @@
 					engine.render();
 				}
 				engine.endFrame();
+				if (wsconnect) {
+					ws.send(JSON.stringify({
+						position: position
+					}));
+				}
 			}
 
 			initXR();
