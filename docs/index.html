@@ -109,8 +109,7 @@
 				engine.addDirectionalLight();
 
 				// Add a box and sphere at the origin of the eye-level coordinate system
-				engine.addBox([0, 0, 0], [0.025, 0.025, 0.025], 0x44ff44);
-				//engine.addTeapot([0,0, -1]);
+				engine.addBox([0, 0, 0], [0.025, 0.025, 0.025], 0xEFBF04);
 				engine.addAxesHelper([0,0,0], [0.2,0.2,0.2]);
 			};
 
@@ -138,7 +137,8 @@
 				// send ws message
 				if (wsconnect) {
 					ws.send(JSON.stringify({
-						position: position
+						position: position,
+						orientation: pose.transform.orientation
 					}));
 				}
 				engine.startFrame();
